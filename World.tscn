@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://enviroment/raw_assets/ground-texture.png" type="Texture" id=1]
+[ext_resource path="res://characters/player/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://World.tres" type="NavigationMesh" id=4]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 50, 50, 1 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
+size = Vector3( 100, 2, 100 )
+
+[sub_resource type="ProceduralSky" id=2]
+sky_top_color = Color( 1, 0.85098, 0.85098, 1 )
+sky_horizon_color = Color( 0.823529, 0.529412, 0.529412, 1 )
+sky_curve = 0.075681
+sky_energy = 0.3
+sun_color = Color( 1, 0.654902, 0.654902, 1 )
+
+[sub_resource type="Environment" id=3]
+background_mode = 2
+background_sky = SubResource( 2 )
+
+[node name="World" type="Spatial"]
+
+[node name="Enviroment" type="Spatial" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Ground" type="MeshInstance" parent="Enviroment"]
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="Navigation" type="Navigation" parent="."]
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+navmesh = ExtResource( 4 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
+transform = Transform( -0.188753, 0, -0.982025, -0.534389, -0.838975, 0.102714, -0.823894, 0.54417, 0.158359, -85.8638, 67.9908, -100.24 )
+light_color = Color( 1, 0.85098, 0.85098, 1 )
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.2753, 0 )
